@@ -9,6 +9,8 @@ class StarterTests {
     @Test
     void contextLoads() {
 
+        System.err.println("1233");
+
     }
 
 }
