@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories("com.jn")
 @EntityScan("com.jn")
 public class Starter {
-
     public static void main(String[] args) {
         SpringApplication.run(Starter.class, args);
     }
