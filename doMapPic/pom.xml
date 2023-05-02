@@ -17,17 +17,19 @@
         <postgres.version>42.5.0</postgres.version>
     </properties>
     <dependencies>
+<!--        Spring相關-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+
+<!--googleApi-->
         <dependency>
             <groupId>com.google.maps</groupId>
             <artifactId>google-maps-services</artifactId>
