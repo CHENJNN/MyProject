@@ -14,12 +14,16 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.util.Assert;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Autowired
     LoginService loginService;
+    @Autowired
+    private MessageSource messageSource;
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -27,10 +31,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Bean
     AuthenticationManager authenticationManager(HttpSecurity httpSecurity) throws Exception{
         AuthenticationManager authenticationManager = httpSecurity.getSharedObject(AuthenticationManagerBuilder.class)
-                .userDetailsService(loginService)
-                .passwordEncoder(passwordEncoder())
-                .and()
+                .authenticationProvider(daoAuthenticationProvider())
                 .build();
         return authenticationManager;
     }
+    @Bean
+    public AuthenticationProvider daoAuthenticationProvider() {
+        Assert.notNull(this.loginService, "請實作UserDetailsService");
+        DaoAuthenticationProvider impl = new DaoAuthenticationProvider();
+        impl.setUserDetailsService(this.loginService);
+        impl.setPasswordEncoder(this.passwordEncoder());
+        impl.setHideUserNotFoundExceptions(false);
+        impl.setMessageSource(this.messageSource);
+        return impl;
+    }
+
+
+
 }

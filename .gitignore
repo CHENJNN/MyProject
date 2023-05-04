@@ -29,4 +29,4 @@ replay_pid*
 *.iws
 *.iml
 *.ipr
-/doMapPic/target/classes/
+/doMapPic/target/
